@@ -1,0 +1,46 @@
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "name" varchar,
+  "email" varchar UNIQUE NOT NULL,
+  "password" varchar NOT NULL,
+  "age" int
+);
+
+CREATE TABLE "entradas" (
+  "id" SERIAL PRIMARY KEY,
+  "id_category" int,
+  "title" varchar,
+  "description" varchar,
+  "author" varchar,
+  "content" varchar
+);
+
+CREATE TABLE "categorias" (
+  "id" SERIAL PRIMARY KEY,
+  "name" varchar
+);
+
+CREATE TABLE "cometarios" (
+  "id" SERIAL PRIMARY KEY,
+  "id_entrada" int,
+  "id_user" int,
+  "comment" varchar
+);
+
+ALTER TABLE "entradas" ADD FOREIGN KEY ("id_category") REFERENCES "categorias" ("id");
+
+ALTER TABLE "cometarios" ADD FOREIGN KEY ("id_entrada") REFERENCES "entradas" ("id");
+
+ALTER TABLE "cometarios" ADD FOREIGN KEY ("id_user") REFERENCES "users" ("id");
+
+insert  into categorias (name) values ('tecnologia'),
+('noticias');
+insert  into users (name,email,password,age) values ('javier','javier@gmail.com','javier123',20),
+('Ana','ana@gmail.com','ana123',21);
+
+
+insert  into entradas (id_category,title,description,author,content) values (1,'telefono flexible ','salio a la venta','javier','blablabla'),
+(2,'terremoto ','en mexico','blade','blablabla');
+
+insert  into cometarios (id_entrada,id_user,comment) values (2,1 ,'que terrible'),
+(1,2,'que bueno ');
